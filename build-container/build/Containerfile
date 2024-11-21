@@ -31,7 +31,16 @@ FROM registry.access.redhat.com/ubi8/ubi-minimal
 WORKDIR /app
 
 # Copy the extracted files from the builder stage
-COPY --from=builder /tmp/ubuntu-s390x /app/s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/1-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/2-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/3-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/4-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/5-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/6-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/7-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/8-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/9-s390x
+COPY --from=builder /tmp/ubuntu-s390x /app/9-s390x
 
 # Expose a port (optional)
 EXPOSE 8080
