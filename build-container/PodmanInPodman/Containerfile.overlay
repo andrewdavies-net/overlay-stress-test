@@ -1,0 +1,16 @@
+FROM quay.io/fedora/fedora:38
+
+USER root
+
+RUN dnf -y update
+
+RUN echo "Installing podman" \
+    && dnf -y install podman htop
+
+# Default podman storage driver should be overlay
+RUN podman info | grep -i graphDriverName
+
+RUN mkdir /build-container
+COPY . /build-container
+
+WORKDIR /root

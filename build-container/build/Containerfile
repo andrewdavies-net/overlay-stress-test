@@ -1,0 +1,40 @@
+# Use Red Hat Universal Base Image minimal as the base
+# Stage 1: Build
+FROM registry.access.redhat.com/ubi8/ubi-minimal as builder
+
+# Set working directory
+WORKDIR /tmp
+
+# Install required packages: curl for downloading, tar for extraction, gzip, and xz for decompression
+RUN microdnf install -y \
+    curl tar gzip xz && \
+    microdnf clean all
+
+# Download the tar.xz file and extract it
+RUN curl -o noble-server-cloudimg-s390x-root.tar.xz https://cloud-images.ubuntu.com/noble/20241120/noble-server-cloudimg-s390x-root.tar.xz && \
+    mkdir -p /tmp/ubuntu-s390x && \
+    tar --no-same-owner --no-same-permissions \
+        --exclude='dev/*' \
+        --exclude='sys/*' \
+        --exclude='proc/*' \
+        --exclude='run/*' \
+        -xf noble-server-cloudimg-s390x-root.tar.xz -C /tmp/ubuntu-s390x && \
+    rm -f noble-server-cloudimg-s390x-root.tar.xz
+
+# Default command (optional)
+CMD ["/bin/bash"]
+
+# Stage 2: Runtime
+FROM registry.access.redhat.com/ubi8/ubi-minimal
+
+# Set working directory
+WORKDIR /app
+
+# Copy the extracted files from the builder stage
+COPY --from=builder /tmp/ubuntu-s390x /app/s390x
+
+# Expose a port (optional)
+EXPOSE 8080
+
+# Run the application (optional)
+CMD ["/bin/sh"]

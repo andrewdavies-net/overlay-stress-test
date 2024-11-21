@@ -1,0 +1,16 @@
+FROM quay.io/fedora/fedora:38
+
+USER root
+
+RUN echo "Updating base software" \
+    && dnf -y update
+
+RUN echo "Installing podman" \
+    && dnf -y install podman htop
+
+RUN echo "Setting podman storage driver to vfs" \
+    && sed -i 's/driver = "overlay"/driver = "vfs"/' /usr/share/containers/storage.conf \
+    && podman system reset -f \
+    && podman info | grep -i graphDriverName
+
+WORKDIR /root
