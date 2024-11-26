@@ -24,8 +24,10 @@ RUN curl -o noble-server-cloudimg-s390x-root.tar.xz https://cloud-images.ubuntu.
 # Default command (optional)
 CMD ["/bin/bash"]
 
+
+# --------------------- build Image --------------------- 
 # Stage 2: Runtime
-FROM registry.access.redhat.com/ubi8/ubi-minimal
+FROM registry.access.redhat.com/ubi8/ubi-minimal as build
 
 # Set working directory
 WORKDIR /app
@@ -47,3 +49,10 @@ EXPOSE 8080
 
 # Run the application (optional)
 CMD ["/bin/sh"]
+# --------------------- Runtime phase --------------------- 
+# Finalise the runtime image
+FROM scratch AS runtime
+COPY --from=build / /
+
+ENV SHELL=/usr/bin/bash
+WORKDIR /app

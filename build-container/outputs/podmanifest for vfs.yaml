@@ -1,0 +1,677 @@
+kind: Pod
+apiVersion: v1
+metadata:
+  annotations:
+    k8s.ovn.org/pod-networks: '{"default":{"ip_addresses":["10.131.0.80/23"],"mac_address":"0a:58:0a:83:00:50","gateway_ips":["10.131.0.1"],"routes":[{"dest":"10.128.0.0/14","nextHop":"10.131.0.1"},{"dest":"172.30.0.0/16","nextHop":"10.131.0.1"},{"dest":"100.64.0.0/16","nextHop":"10.131.0.1"}],"ip_address":"10.131.0.80/23","gateway_ip":"10.131.0.1"}}'
+    k8s.v1.cni.cncf.io/network-status: |-
+      [{
+          "name": "ovn-kubernetes",
+          "interface": "eth0",
+          "ips": [
+              "10.131.0.80"
+          ],
+          "mac": "0a:58:0a:83:00:50",
+          "default": true,
+          "dns": {}
+      }]
+    openshift.io/scc: pipelines-scc
+    pipeline.openshift.io/started-by: 'kube:admin'
+    pipeline.tekton.dev/release: ea84aaa
+    tekton.dev/ready: READY
+  resourceVersion: '570296'
+  name: build-and-deploy-pipeline-5tiioq-buildah-pod
+  uid: d452b3ca-1928-44b4-a191-f9533cdb2b5c
+  creationTimestamp: '2024-11-21T16:04:51Z'
+  managedFields:
+    - manager: multus-daemon
+      operation: Update
+      apiVersion: v1
+      time: '2024-11-21T16:04:51Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:k8s.v1.cni.cncf.io/network-status': {}
+      subresource: status
+    - manager: worker-3
+      operation: Update
+      apiVersion: v1
+      time: '2024-11-21T16:04:51Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            'f:k8s.ovn.org/pod-networks': {}
+      subresource: status
+    - manager: kubelet
+      operation: Update
+      apiVersion: v1
+      time: '2024-11-21T16:04:55Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:status':
+          'f:conditions':
+            'k:{"type":"ContainersReady"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Initialized"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+            'k:{"type":"Ready"}':
+              .: {}
+              'f:lastProbeTime': {}
+              'f:lastTransitionTime': {}
+              'f:status': {}
+              'f:type': {}
+          'f:containerStatuses': {}
+          'f:hostIP': {}
+          'f:initContainerStatuses': {}
+          'f:phase': {}
+          'f:podIP': {}
+          'f:podIPs':
+            .: {}
+            'k:{"ip":"10.131.0.80"}':
+              .: {}
+              'f:ip': {}
+          'f:startTime': {}
+      subresource: status
+    - manager: openshift-pipelines-controller
+      operation: Update
+      apiVersion: v1
+      time: '2024-11-21T16:04:55Z'
+      fieldsType: FieldsV1
+      fieldsV1:
+        'f:metadata':
+          'f:annotations':
+            .: {}
+            'f:pipeline.openshift.io/started-by': {}
+            'f:pipeline.tekton.dev/release': {}
+            'f:tekton.dev/ready': {}
+          'f:labels':
+            .: {}
+            'f:app.kubernetes.io/managed-by': {}
+            'f:tekton.dev/clusterTask': {}
+            'f:tekton.dev/memberOf': {}
+            'f:tekton.dev/pipeline': {}
+            'f:tekton.dev/pipelineRun': {}
+            'f:tekton.dev/pipelineTask': {}
+            'f:tekton.dev/taskRun': {}
+          'f:ownerReferences':
+            .: {}
+            'k:{"uid":"9c0b5cd9-ec33-4841-8759-246da096e237"}': {}
+        'f:spec':
+          'f:volumes':
+            'k:{"name":"ws-lq6lk"}':
+              .: {}
+              'f:name': {}
+              'f:persistentVolumeClaim':
+                .: {}
+                'f:claimName': {}
+            'k:{"name":"tekton-internal-run-0"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+            'k:{"name":"tekton-creds-init-home-0"}':
+              .: {}
+              'f:emptyDir':
+                .: {}
+                'f:medium': {}
+              'f:name': {}
+            'k:{"name":"tekton-internal-workspace"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+            'k:{"name":"tekton-internal-results"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+            .: {}
+            'k:{"name":"varlibcontainers"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+            'k:{"name":"tekton-internal-secret-volume-pipeline-dockercfg-zm8d4-nc6qb"}':
+              .: {}
+              'f:name': {}
+              'f:secret':
+                .: {}
+                'f:defaultMode': {}
+                'f:secretName': {}
+            'k:{"name":"tekton-internal-steps"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+            'k:{"name":"tekton-internal-bin"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+            'k:{"name":"tekton-internal-scripts"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+            'k:{"name":"tekton-internal-downward"}':
+              .: {}
+              'f:downwardAPI':
+                .: {}
+                'f:defaultMode': {}
+                'f:items': {}
+              'f:name': {}
+            'k:{"name":"tekton-internal-home"}':
+              .: {}
+              'f:emptyDir': {}
+              'f:name': {}
+          'f:containers':
+            'k:{"name":"step-build-and-push"}':
+              'f:image': {}
+              'f:volumeMounts':
+                'k:{"mountPath":"/tekton/downward"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/workspace"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/home"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/results"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/var/lib/containers"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                .: {}
+                'k:{"mountPath":"/tekton/creds"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/creds-secrets/pipeline-dockercfg-zm8d4"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/bin"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/tekton/steps"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/tekton/scripts"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/workspace/source"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/run/0"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+              'f:terminationMessagePolicy': {}
+              .: {}
+              'f:workingDir': {}
+              'f:resources': {}
+              'f:args': {}
+              'f:command': {}
+              'f:securityContext':
+                .: {}
+                'f:capabilities':
+                  .: {}
+                  'f:add': {}
+              'f:terminationMessagePath': {}
+              'f:imagePullPolicy': {}
+              'f:name': {}
+          'f:dnsPolicy': {}
+          'f:serviceAccount': {}
+          'f:restartPolicy': {}
+          'f:activeDeadlineSeconds': {}
+          'f:schedulerName': {}
+          'f:terminationGracePeriodSeconds': {}
+          'f:initContainers':
+            .: {}
+            'k:{"name":"place-scripts"}':
+              'f:image': {}
+              'f:volumeMounts':
+                .: {}
+                'k:{"mountPath":"/tekton/bin"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/scripts"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+              'f:terminationMessagePolicy': {}
+              .: {}
+              'f:resources': {}
+              'f:args': {}
+              'f:command': {}
+              'f:terminationMessagePath': {}
+              'f:imagePullPolicy': {}
+              'f:name': {}
+            'k:{"name":"prepare"}':
+              'f:image': {}
+              'f:volumeMounts':
+                .: {}
+                'k:{"mountPath":"/tekton/bin"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/steps"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+              'f:terminationMessagePolicy': {}
+              .: {}
+              'f:workingDir': {}
+              'f:resources': {}
+              'f:command': {}
+              'f:terminationMessagePath': {}
+              'f:imagePullPolicy': {}
+              'f:name': {}
+            'k:{"name":"working-dir-initializer"}':
+              'f:image': {}
+              'f:volumeMounts':
+                .: {}
+                'k:{"mountPath":"/tekton/home"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/results"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                'k:{"mountPath":"/tekton/steps"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+                  'f:readOnly': {}
+                'k:{"mountPath":"/workspace"}':
+                  .: {}
+                  'f:mountPath': {}
+                  'f:name': {}
+              'f:terminationMessagePolicy': {}
+              .: {}
+              'f:workingDir': {}
+              'f:resources': {}
+              'f:args': {}
+              'f:command': {}
+              'f:terminationMessagePath': {}
+              'f:imagePullPolicy': {}
+              'f:name': {}
+          'f:serviceAccountName': {}
+          'f:enableServiceLinks': {}
+          'f:securityContext': {}
+  namespace: overlay-build
+  ownerReferences:
+    - apiVersion: tekton.dev/v1
+      kind: TaskRun
+      name: build-and-deploy-pipeline-5tiioq-buildah
+      uid: 9c0b5cd9-ec33-4841-8759-246da096e237
+      controller: true
+      blockOwnerDeletion: true
+  labels:
+    app.kubernetes.io/managed-by: tekton-pipelines
+    tekton.dev/clusterTask: buildah
+    tekton.dev/memberOf: tasks
+    tekton.dev/pipeline: build-and-deploy-pipeline
+    tekton.dev/pipelineRun: build-and-deploy-pipeline-5tiioq
+    tekton.dev/pipelineTask: buildah
+    tekton.dev/taskRun: build-and-deploy-pipeline-5tiioq-buildah
+spec:
+  restartPolicy: Never
+  activeDeadlineSeconds: 43200
+  initContainers:
+    - resources: {}
+      terminationMessagePath: /dev/termination-log
+      name: prepare
+      command:
+        - /ko-app/entrypoint
+        - init
+        - /ko-app/entrypoint
+        - /tekton/bin/entrypoint
+        - step-build-and-push
+      securityContext:
+        capabilities:
+          drop:
+            - MKNOD
+        allowPrivilegeEscalation: false
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: tekton-internal-bin
+          mountPath: /tekton/bin
+        - name: tekton-internal-steps
+          mountPath: /tekton/steps
+        - name: kube-api-access-c545z
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: File
+      image: 'registry.redhat.io/openshift-pipelines/pipelines-entrypoint-rhel8@sha256:ccf051c37a529d3c9384a93a2ca21031041d8e0c84d02971bbd6d879a9bc64ad'
+      workingDir: /
+    - resources: {}
+      terminationMessagePath: /dev/termination-log
+      name: place-scripts
+      command:
+        - sh
+      securityContext:
+        capabilities:
+          drop:
+            - MKNOD
+        allowPrivilegeEscalation: false
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: tekton-internal-scripts
+          mountPath: /tekton/scripts
+        - name: tekton-internal-bin
+          mountPath: /tekton/bin
+        - name: kube-api-access-c545z
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: File
+      image: 'registry.redhat.io/openshift-pipelines/pipelines-entrypoint-rhel8@sha256:ccf051c37a529d3c9384a93a2ca21031041d8e0c84d02971bbd6d879a9bc64ad'
+      args:
+        - '-c'
+        - |
+          scriptfile="/tekton/scripts/script-0-z5sv5"
+          touch ${scriptfile} && chmod +x ${scriptfile}
+          cat > ${scriptfile} << '_EOF_'
+          IyEvYmluL3NoCnNldCAtZQpidWlsZGFoIC0tc3RvcmFnZS1kcml2ZXI9dmZzIGJ1ZCBcCiAgIC0tZm9ybWF0PW9jaSBcCiAgLS10bHMtdmVyaWZ5PXRydWUgLS1uby1jYWNoZSBcCiAgLWYgLi9idWlsZC1jb250YWluZXIvYnVpbGQvQ29udGFpbmVyZmlsZSAtdCBpbWFnZS1yZWdpc3RyeS5vcGVuc2hpZnQtaW1hZ2UtcmVnaXN0cnkuc3ZjOjUwMDAvb3ZlcmxheS1idWlsZC90ZXN0OnYxIC4KCltbICJmYWxzZSIgPT0gInRydWUiIF1dICYmIGVjaG8gIlB1c2ggc2tpcHBlZCIgJiYgZXhpdCAwCgppZiBbWyAiZmFsc2UiID09ICJ0cnVlIiBdXTsgdGhlbgoKICAjIGlmIGNvbmZpZy5qc29uIGV4aXN0cyBhdCB3b3Jrc3BhY2Ugcm9vdCwgd2UgdXNlIHRoYXQKICBpZiB0ZXN0IC1mICIvY29uZmlnLmpzb24iOyB0aGVuCiAgICBleHBvcnQgRE9DS0VSX0NPTkZJRz0iIgoKICAjIGVsc2Ugd2UgbG9vayBmb3IgLmRvY2tlcmNvbmZpZ2pzb24gYXQgdGhlIHJvb3QKICBlbGlmIHRlc3QgLWYgIi8uZG9ja2VyY29uZmlnanNvbiI7IHRoZW4KICAgIGNwICIvLmRvY2tlcmNvbmZpZ2pzb24iICIkSE9NRS8uZG9ja2VyL2NvbmZpZy5qc29uIgogICAgZXhwb3J0IERPQ0tFUl9DT05GSUc9IiRIT01FLy5kb2NrZXIiCgogICMgbmVlZCB0byBlcnJvciBvdXQgaWYgbmVpdGhlciBmaWxlcyBhcmUgcHJlc2VudAogIGVsc2UKICAgIGVjaG8gIm5laXRoZXIgJ2NvbmZpZy5qc29uJyBub3IgJy5kb2NrZXJjb25maWdqc29uJyBmb3VuZCBhdCB3b3Jrc3BhY2Ugcm9vdCIKICAgIGV4aXQgMQogIGZpCmZpCgpidWlsZGFoIC0tc3RvcmFnZS1kcml2ZXI9dmZzIHB1c2ggXAogICAtLXRscy12ZXJpZnk9dHJ1ZSBcCiAgLS1kaWdlc3RmaWxlIC90bXAvaW1hZ2UtZGlnZXN0IGltYWdlLXJlZ2lzdHJ5Lm9wZW5zaGlmdC1pbWFnZS1yZWdpc3RyeS5zdmM6NTAwMC9vdmVybGF5LWJ1aWxkL3Rlc3Q6djEgXAogIGRvY2tlcjovL2ltYWdlLXJlZ2lzdHJ5Lm9wZW5zaGlmdC1pbWFnZS1yZWdpc3RyeS5zdmM6NTAwMC9vdmVybGF5LWJ1aWxkL3Rlc3Q6djEKY2F0IC90bXAvaW1hZ2UtZGlnZXN0IHwgdGVlIC90ZWt0b24vcmVzdWx0cy9JTUFHRV9ESUdFU1QKZWNobyAiaW1hZ2UtcmVnaXN0cnkub3BlbnNoaWZ0LWltYWdlLXJlZ2lzdHJ5LnN2Yzo1MDAwL292ZXJsYXktYnVpbGQvdGVzdDp2MSIgfCB0ZWUgL3Rla3Rvbi9yZXN1bHRzL0lNQUdFX1VSTAo=
+          _EOF_
+          /tekton/bin/entrypoint decode-script "${scriptfile}"
+    - resources: {}
+      terminationMessagePath: /dev/termination-log
+      name: working-dir-initializer
+      command:
+        - /ko-app/workingdirinit
+      securityContext:
+        capabilities:
+          drop:
+            - MKNOD
+        allowPrivilegeEscalation: false
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: tekton-internal-workspace
+          mountPath: /workspace
+        - name: tekton-internal-home
+          mountPath: /tekton/home
+        - name: tekton-internal-results
+          mountPath: /tekton/results
+        - name: tekton-internal-steps
+          readOnly: true
+          mountPath: /tekton/steps
+        - name: kube-api-access-c545z
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+      terminationMessagePolicy: File
+      image: 'registry.redhat.io/openshift-pipelines/pipelines-workingdirinit-rhel8@sha256:e39260b710116aa95c897baa6d3564a4a6e1a27eff29cda0af6206a888719610'
+      workingDir: /workspace
+      args:
+        - /workspace/source
+  serviceAccountName: pipeline
+  imagePullSecrets:
+    - name: pipeline-dockercfg-zm8d4
+  priority: 0
+  schedulerName: default-scheduler
+  enableServiceLinks: true
+  terminationGracePeriodSeconds: 30
+  preemptionPolicy: PreemptLowerPriority
+  nodeName: worker-3
+  securityContext:
+    seLinuxOptions:
+      level: 's0:c27,c19'
+    fsGroup: 1000740000
+  containers:
+    - resources: {}
+      terminationMessagePath: /tekton/termination
+      name: step-build-and-push
+      command:
+        - /tekton/bin/entrypoint
+      env:
+        - name: SSL_CERT_DIR
+          value: '/tekton-custom-certs:/etc/ssl/certs:/etc/pki/tls/certs:/system/etc/security/cacerts'
+      securityContext:
+        capabilities:
+          add:
+            - SETFCAP
+          drop:
+            - MKNOD
+        allowPrivilegeEscalation: false
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+        - name: varlibcontainers
+          mountPath: /var/lib/containers
+        - name: ws-lq6lk
+          mountPath: /workspace/source
+        - name: tekton-internal-scripts
+          readOnly: true
+          mountPath: /tekton/scripts
+        - name: tekton-internal-downward
+          readOnly: true
+          mountPath: /tekton/downward
+        - name: tekton-creds-init-home-0
+          mountPath: /tekton/creds
+        - name: tekton-internal-run-0
+          mountPath: /tekton/run/0
+        - name: tekton-internal-bin
+          readOnly: true
+          mountPath: /tekton/bin
+        - name: tekton-internal-workspace
+          mountPath: /workspace
+        - name: tekton-internal-home
+          mountPath: /tekton/home
+        - name: tekton-internal-results
+          mountPath: /tekton/results
+        - name: tekton-internal-steps
+          readOnly: true
+          mountPath: /tekton/steps
+        - name: tekton-internal-secret-volume-pipeline-dockercfg-zm8d4-nc6qb
+          mountPath: /tekton/creds-secrets/pipeline-dockercfg-zm8d4
+        - name: kube-api-access-c545z
+          readOnly: true
+          mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+        - name: config-trusted-cabundle-volume
+          readOnly: true
+          mountPath: /tekton-custom-certs/ca-bundle.crt
+          subPath: ca-bundle.crt
+        - name: config-service-cabundle-volume
+          readOnly: true
+          mountPath: /tekton-custom-certs/service-ca.crt
+          subPath: service-ca.crt
+      terminationMessagePolicy: File
+      image: 'registry.redhat.io/rhel8/buildah@sha256:3c2ea396a114221575a4031d90d28c43563f7b96288374e0ba8b22de3ed97b5a'
+      workingDir: /workspace/source
+      args:
+        - '-wait_file'
+        - /tekton/downward/ready
+        - '-wait_file_content'
+        - '-post_file'
+        - /tekton/run/0/out
+        - '-termination_path'
+        - /tekton/termination
+        - '-step_metadata_dir'
+        - /tekton/run/0/status
+        - '-docker-cfg=pipeline-dockercfg-zm8d4'
+        - '-results'
+        - 'IMAGE_DIGEST,IMAGE_URL'
+        - '-entrypoint'
+        - /tekton/scripts/script-0-z5sv5
+        - '--'
+  serviceAccount: pipeline
+  volumes:
+    - name: tekton-internal-workspace
+      emptyDir: {}
+    - name: tekton-internal-home
+      emptyDir: {}
+    - name: tekton-internal-results
+      emptyDir: {}
+    - name: tekton-internal-steps
+      emptyDir: {}
+    - name: tekton-internal-secret-volume-pipeline-dockercfg-zm8d4-nc6qb
+      secret:
+        secretName: pipeline-dockercfg-zm8d4
+        defaultMode: 420
+    - name: tekton-internal-scripts
+      emptyDir: {}
+    - name: tekton-internal-bin
+      emptyDir: {}
+    - name: tekton-internal-downward
+      downwardAPI:
+        items:
+          - path: ready
+            fieldRef:
+              apiVersion: v1
+              fieldPath: 'metadata.annotations[''tekton.dev/ready'']'
+        defaultMode: 420
+    - name: tekton-creds-init-home-0
+      emptyDir:
+        medium: Memory
+    - name: tekton-internal-run-0
+      emptyDir: {}
+    - name: varlibcontainers
+      emptyDir: {}
+    - name: ws-lq6lk
+      persistentVolumeClaim:
+        claimName: cephfs
+    - name: kube-api-access-c545z
+      projected:
+        sources:
+          - serviceAccountToken:
+              expirationSeconds: 3607
+              path: token
+          - configMap:
+              name: kube-root-ca.crt
+              items:
+                - key: ca.crt
+                  path: ca.crt
+          - downwardAPI:
+              items:
+                - path: namespace
+                  fieldRef:
+                    apiVersion: v1
+                    fieldPath: metadata.namespace
+          - configMap:
+              name: openshift-service-ca.crt
+              items:
+                - key: service-ca.crt
+                  path: service-ca.crt
+        defaultMode: 420
+    - name: config-trusted-cabundle-volume
+      configMap:
+        name: config-trusted-cabundle
+        items:
+          - key: ca-bundle.crt
+            path: ca-bundle.crt
+        defaultMode: 420
+    - name: config-service-cabundle-volume
+      configMap:
+        name: config-service-cabundle
+        items:
+          - key: service-ca.crt
+            path: service-ca.crt
+        defaultMode: 420
+  dnsPolicy: ClusterFirst
+  tolerations:
+    - key: node.kubernetes.io/not-ready
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+    - key: node.kubernetes.io/unreachable
+      operator: Exists
+      effect: NoExecute
+      tolerationSeconds: 300
+status:
+  containerStatuses:
+    - restartCount: 0
+      started: true
+      ready: true
+      name: step-build-and-push
+      state:
+        running:
+          startedAt: '2024-11-21T16:04:55Z'
+      imageID: 'registry.redhat.io/rhel8/buildah@sha256:3c2ea396a114221575a4031d90d28c43563f7b96288374e0ba8b22de3ed97b5a'
+      image: 'registry.redhat.io/rhel8/buildah@sha256:3c2ea396a114221575a4031d90d28c43563f7b96288374e0ba8b22de3ed97b5a'
+      lastState: {}
+      containerID: 'cri-o://624d1be62af8286ebb92b56403d04daf7610b545495fe57ddb37ac4dbc55cf4a'
+  qosClass: BestEffort
+  podIPs:
+    - ip: 10.131.0.80
+  podIP: 10.131.0.80
+  hostIP: 192.168.252.16
+  startTime: '2024-11-21T16:04:51Z'
+  initContainerStatuses:
+    - name: prepare
+      state:
+        terminated:
+          exitCode: 0
+          reason: Completed
+          startedAt: '2024-11-21T16:04:52Z'
+          finishedAt: '2024-11-21T16:04:52Z'
+          containerID: 'cri-o://41c12d73da7c7691b49e442b453108b0d48381f0deb9b7d61b27c16e903c4f64'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: 'registry.redhat.io/openshift-pipelines/pipelines-entrypoint-rhel8@sha256:ccf051c37a529d3c9384a93a2ca21031041d8e0c84d02971bbd6d879a9bc64ad'
+      imageID: 'registry.redhat.io/openshift-pipelines/pipelines-entrypoint-rhel8@sha256:38b6a48d310653d3ea7e925567e4958906f7f48f2833737f92312b0ebb0f4442'
+      containerID: 'cri-o://41c12d73da7c7691b49e442b453108b0d48381f0deb9b7d61b27c16e903c4f64'
+    - name: place-scripts
+      state:
+        terminated:
+          exitCode: 0
+          reason: Completed
+          startedAt: '2024-11-21T16:04:53Z'
+          finishedAt: '2024-11-21T16:04:53Z'
+          containerID: 'cri-o://a3b5e7a139e2d671c8114f15fe82bd96c94ad8a632f96762117dfe16eefb2b4c'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: 'registry.redhat.io/openshift-pipelines/pipelines-entrypoint-rhel8@sha256:ccf051c37a529d3c9384a93a2ca21031041d8e0c84d02971bbd6d879a9bc64ad'
+      imageID: 'registry.redhat.io/openshift-pipelines/pipelines-entrypoint-rhel8@sha256:38b6a48d310653d3ea7e925567e4958906f7f48f2833737f92312b0ebb0f4442'
+      containerID: 'cri-o://a3b5e7a139e2d671c8114f15fe82bd96c94ad8a632f96762117dfe16eefb2b4c'
+    - name: working-dir-initializer
+      state:
+        terminated:
+          exitCode: 0
+          reason: Completed
+          startedAt: '2024-11-21T16:04:54Z'
+          finishedAt: '2024-11-21T16:04:54Z'
+          containerID: 'cri-o://1a4c252e7b665bda6969e94c607b35bcfbcb1405649f676c13e44d64acf6b29f'
+      lastState: {}
+      ready: true
+      restartCount: 0
+      image: 'registry.redhat.io/openshift-pipelines/pipelines-workingdirinit-rhel8@sha256:e39260b710116aa95c897baa6d3564a4a6e1a27eff29cda0af6206a888719610'
+      imageID: 'registry.redhat.io/openshift-pipelines/pipelines-workingdirinit-rhel8@sha256:c123741b6b458de39e1f83f95dba70208d4bc5046084544bb80c199732ff2fbb'
+      containerID: 'cri-o://1a4c252e7b665bda6969e94c607b35bcfbcb1405649f676c13e44d64acf6b29f'
+  conditions:
+    - type: Initialized
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-11-21T16:04:54Z'
+    - type: Ready
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-11-21T16:04:55Z'
+    - type: ContainersReady
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-11-21T16:04:55Z'
+    - type: PodScheduled
+      status: 'True'
+      lastProbeTime: null
+      lastTransitionTime: '2024-11-21T16:04:51Z'
+  phase: Running
