@@ -1,0 +1,24 @@
+# Stage 1: Write some files
+FROM alpine:latest AS builder
+WORKDIR /app
+
+# Write some files
+RUN echo "File 1 content" > file1.txt
+RUN echo "File 2 content" > file2.txt
+RUN echo "File 3 content" > file3.txt
+
+# Stage 2: Add files and create layers
+FROM alpine:latest
+WORKDIR /app
+
+# Copy files from the builder stage
+COPY --from=builder /app/file1.txt .
+COPY --from=builder /app/file2.txt .
+COPY --from=builder /app/file3.txt .
+
+# Add additional commands to create layers
+RUN echo "Adding Layer 1" >> layer1.txt
+RUN echo "Adding Layer 2" >> layer2.txt
+RUN echo "Adding Layer 3" >> layer3.txt
+
+CMD ["cat", "file1.txt", "file2.txt", "file3.txt", "layer1.txt", "layer2.txt", "layer3.txt"]
