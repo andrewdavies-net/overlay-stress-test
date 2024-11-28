@@ -1,38 +1,68 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: buildah-build
+  name: buildah-push
 spec:
   params:
-  - name: context-dir
+  - name: image-name
     type: string
-    default: .
-  - name: containerfile-path
-    type: string
-    default: Containerfile
+  # - name: architectures
+  #   type: array
   - name: BUILD_EXTRA_ARGS
     type: string
     default: ''
     description: Extra parameters passed for the build command when building images.
+  - default: 'false'
+    description: Skip pushing the built image
+    name: SKIP_PUSH
+    type: string
   workspaces:
-  - name: source-workspace
-    description: Workspace containing source code
   - name: oci-images
     mountPath: /srv/oci-images
   volumes:
   - name: container-storage
     emptyDir: {}
   steps:
-  - name: build
+  - name: push
     image: registry.redhat.io/rhel8/buildah:8.9
     env:
     - name: STORAGE_DRIVER
       value: vfs
+    # args:
+    # - "$(params.architectures[*])"
     script: |
       #!/bin/bash
       set -Eeuo pipefail
+
+      [[ "$(params.SKIP_PUSH)" == "true" ]] && echo "Push skipped" && exit 0
+
+      if [[ "$(workspaces.dockerconfig.bound)" == "true" ]]; then
+
+        # if config.json exists at workspace root, we use that
+        if test -f "$(workspaces.dockerconfig.path)/config.json"; then
+          export DOCKER_CONFIG="$(workspaces.dockerconfig.path)"
+
+        # else we look for .dockerconfigjson at the root
+        elif test -f "$(workspaces.dockerconfig.path)/.dockerconfigjson"; then
+          cp "$(workspaces.dockerconfig.path)/.dockerconfigjson" "$HOME/.docker/config.json"
+          export DOCKER_CONFIG="$HOME/.docker"
+
+        # need to error out if neither files are present
+        else
+          echo "neither 'config.json' nor '.dockerconfigjson' found at workspace root"
+          exit 1
+        fi
+      fi
+
+
+      echo "Loading Image from OCI"
+      buildah pull oci-archive:/srv/oci-images/common:v1.tar
+      
       buildah bud -t $(params.BUILD_EXTRA_ARGS) localhost/image:build:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
-      buildah push localhost/image:build:v1 oci-archive:/srv/oci-images/build:v1.tar
+      
+
+      buildah manifest create localhost/build "build:v1"
+      buildah manifest push --all localhost/build docker://$(params.image-name)
     securityContext:
       capabilities:
         add:
