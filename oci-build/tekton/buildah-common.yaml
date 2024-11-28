@@ -33,8 +33,8 @@ spec:
     script: |
       #!/bin/bash
       set -Eeuo pipefail
-      buildah bud $(params.BUILD_EXTRA_ARGS) -t localhost/common:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
-      buildah push localhost/common:v1 oci-archive:/srv/oci-images/common:v1.tar
+      buildah bud $(params.BUILD_EXTRA_ARGS) -t common:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
+      buildah push common:v1 oci-archive:/srv/oci-images/common:v1.tar
     securityContext:
       capabilities:
         add:
