@@ -62,13 +62,15 @@ spec:
         fi
       fi
       echo "Loading Image from OCI"
-      buildah pull --name common:v1 oci-archive:/srv/oci-images/common:v1.tar
+      buildah pull oci-archive:/srv/oci-images/common:v1.tar
       buildah images
       image_id=$(buildah images -q | head -n 1)
       buildah tag $image_id common:v1
+      buildah images
       echo "Building Image"
-      buildah bud $(params.BUILD_EXTRA_ARGS) -t localhost/build:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
+      buildah bud $(params.BUILD_EXTRA_ARGS) -t build:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
       echo "create manifest "
+      buildah images
       buildah manifest create localhost/build "build:v1"
       buildah manifest push --all localhost/build:v1 docker://$(params.image-name)
     securityContext:
