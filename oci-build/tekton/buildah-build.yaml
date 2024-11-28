@@ -62,7 +62,7 @@ spec:
         fi
       fi
       echo "Loading Image from OCI"
-      buildah pull oci-archive:/srv/oci-images/common:v1.tar
+      buildah pull --name localhost/common:v1 oci-archive:/srv/oci-images/common:v1.tar
       echo "Building Image"
       buildah bud $(params.BUILD_EXTRA_ARGS) -t localhost/build:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
       echo "create manifest "
