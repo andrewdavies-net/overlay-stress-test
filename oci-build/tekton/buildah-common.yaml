@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: buildah-build
+  name: buildah-common
 spec:
   params:
   - name: context-dir
@@ -23,7 +23,7 @@ spec:
   - name: container-storage
     emptyDir: {}
   steps:
-  - name: build
+  - name: common
     image: registry.redhat.io/rhel8/buildah:8.9
     env:
     - name: STORAGE_DRIVER
@@ -31,8 +31,8 @@ spec:
     script: |
       #!/bin/bash
       set -Eeuo pipefail
-      buildah bud -t $(params.BUILD_EXTRA_ARGS) localhost/image:common:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
-      buildah push localhost/image:common:v1 oci-archive:/srv/oci-images/common:v1.tar
+      buildah bud $(params.BUILD_EXTRA_ARGS) -t localhost/common:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
+      buildah push localhost/common:v1 oci-archive:/srv/oci-images/common:v1.tar
     securityContext:
       capabilities:
         add:

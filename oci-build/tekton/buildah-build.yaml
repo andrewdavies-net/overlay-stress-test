@@ -1,29 +1,35 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
-  name: buildah-push
+  name: buildah-build
 spec:
   params:
   - name: image-name
     type: string
-  # - name: architectures
-  #   type: array
+  - name: context-dir
+    type: string
+    default: .
   - name: BUILD_EXTRA_ARGS
     type: string
     default: ''
     description: Extra parameters passed for the build command when building images.
-  - default: 'false'
-    description: Skip pushing the built image
-    name: SKIP_PUSH
+  - name: containerfile-path
     type: string
+    default: Containerfile
+  - name: SKIP_PUSH
+    type: string
+    default: 'false'
+    description: Skip pushing the built image
   workspaces:
+  - name: source-workspace
+    description: Workspace containing source code
   - name: oci-images
     mountPath: /srv/oci-images
   volumes:
   - name: container-storage
     emptyDir: {}
   steps:
-  - name: push
+  - name: build
     image: registry.redhat.io/rhel8/buildah:8.9
     env:
     - name: STORAGE_DRIVER
@@ -53,14 +59,9 @@ spec:
           exit 1
         fi
       fi
-
-
       echo "Loading Image from OCI"
       buildah pull oci-archive:/srv/oci-images/common:v1.tar
-      
-      buildah bud -t $(params.BUILD_EXTRA_ARGS) localhost/image:build:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
-      
-
+      buildah bud -t $(params.BUILD_EXTRA_ARGS) localhost/build:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
       buildah manifest create localhost/build "build:v1"
       buildah manifest push --all localhost/build docker://$(params.image-name)
     securityContext:
