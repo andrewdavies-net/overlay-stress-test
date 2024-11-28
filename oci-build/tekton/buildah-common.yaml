@@ -28,6 +28,8 @@ spec:
     env:
     - name: STORAGE_DRIVER
       value: vfs
+    - name: BUILDAH_LAYER
+      value: "true"
     script: |
       #!/bin/bash
       set -Eeuo pipefail
