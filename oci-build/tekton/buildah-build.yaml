@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: buildah-build
+spec:
+  params:
+  - name: context-dir
+    type: string
+    default: .
+  - name: containerfile-path
+    type: string
+    default: Containerfile
+  - name: BUILD_EXTRA_ARGS
+    type: string
+    default: ''
+    description: Extra parameters passed for the build command when building images.
+  workspaces:
+  - name: source-workspace
+    description: Workspace containing source code
+  - name: oci-images
+    mountPath: /srv/oci-images
+  volumes:
+  - name: container-storage
+    emptyDir: {}
+  steps:
+  - name: build
+    image: registry.redhat.io/rhel8/buildah:8.9
+    env:
+    - name: STORAGE_DRIVER
+      value: vfs
+    script: |
+      #!/bin/bash
+      set -Eeuo pipefail
+      buildah bud -t $(params.BUILD_EXTRA_ARGS) localhost/image:build:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
+      buildah push localhost/image:build:v1 oci-archive:/srv/oci-images/build:v1.tar
+    securityContext:
+      capabilities:
+        add:
+          - SETFCAP
+    volumeMounts:
+    - name: container-storage
+      mountPath: /var/lib/containers

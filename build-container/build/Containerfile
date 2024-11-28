@@ -1,5 +1,5 @@
 # Use Red Hat Universal Base Image minimal as the base
-# Stage 1: Build
+# Stage 1: Builder
 FROM registry.access.redhat.com/ubi8/ubi-minimal as builder
 
 # Set working directory
@@ -26,7 +26,7 @@ CMD ["/bin/bash"]
 
 
 # --------------------- build Image --------------------- 
-# Stage 2: Runtime
+# Stage 2: build
 FROM registry.access.redhat.com/ubi8/ubi-minimal as build
 
 # Set working directory
@@ -51,6 +51,8 @@ EXPOSE 8080
 CMD ["/bin/sh"]
 # --------------------- Runtime phase --------------------- 
 # Finalise the runtime image
+# Stage 3: runtime
+
 FROM scratch AS runtime
 COPY --from=build / /
 
