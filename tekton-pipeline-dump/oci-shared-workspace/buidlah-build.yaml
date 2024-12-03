@@ -80,7 +80,7 @@ spec:
         buildah bud $(params.BUILD_EXTRA_ARGS) -t build:v1 -f $(workspaces.source-workspace.path)/$(params.containerfile-path) $(workspaces.source-workspace.path)/$(params.context-dir)
         echo "create manifest"
         buildah images
-        buildah push --all localhost/build:v1 docker://$(params.image-name)
+        # buildah push --all localhost/build:v1 docker://$(params.image-name)
       securityContext:
         capabilities:
           add:
