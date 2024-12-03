@@ -16,3 +16,8 @@ Using ceph rwx file volume behind /var/lib/containers, build didnt appear to pic
 ### oci-shared-workspace
 Using emptydir for /var/lib/containers, exporting early common stage tar of containerfile and pushing into shared-workspace hosted on a pvc (dont think it matters what), next tekton task reimports tar into buildah/tags/references as next stage
 > Around 6 mins 4 seconds 
+
+
+### Issues
+#### Caching 
+For some reason when using volumes behind /var/lib/containers it refuses to read the previous layers like it would in podman.  It just builds fresh. Adding layers doesnt help here as it wont --rm=false that is meant to preserve intermediate layers doesnt do anything. I have not tried writing each stage to a repo, but i am not convinced buildah is caching well or designed for it. I tried a simple build to the same effect.
