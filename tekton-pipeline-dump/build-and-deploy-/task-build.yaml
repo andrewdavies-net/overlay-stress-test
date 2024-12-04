@@ -1,0 +1,106 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-varlib-workspace
+spec:
+  params:
+    - name: TLSVERIFY
+      default: "false"
+      description: Verify the TLS on the registry endpoint
+      type: string
+    - name: STORAGE_DRIVER
+      description: The Buildah storage STORAGE_DRIVER
+      type: string
+    - name: app-dir
+      type: string
+    - name: containerfile-dir
+      type: string
+  stepTemplate:
+    env:
+      - name: "HOME"
+        value: "/tekton/home"
+  steps:
+    # - name: package-node-app
+    #   command:
+    #   - /bin/sh
+    #   - -c
+    #   args:
+    #   - |-
+    #     npm install -g npm@9.2.0
+    #     npm install
+    #     ls -al
+    #   image: registry.redhat.io/rhel9/nodejs-16:latest
+    #   resources: {}
+    #   workingDir: /resources/$(params.app-dir)
+    - name: build
+      command:
+      - buildah
+      - bud
+      - --tls-verify=$(params.TLSVERIFY)
+      - --storage-driver=$(params.STORAGE_DRIVER)
+      - --root
+      - /files/buildah-containers
+      - --layers
+      - -f
+      - $(params.containerfile-dir)
+      - -t
+      - my-container-image
+      - .
+      image: registry.redhat.io/rhel8/buildah:latest
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
+      workingDir: /resources/$(params.app-dir)
+    - name: list-images
+      command:
+      - buildah
+      - images
+      - --storage-driver=$(params.STORAGE_DRIVER)
+      - --root
+      - /files/buildah-containers
+      image: registry.redhat.io/rhel8/buildah:latest
+      resources: {}
+      securityContext:
+        capabilities:
+          add:
+          - SETFCAP
+      workingDir: /
+
+    - name: mount-container
+      image: registry.redhat.io/rhel8/buildah:latest
+      script: |
+        container=$(buildah --storage-driver=$(params.STORAGE_DRIVER) --root files/buildah-containers from --pull-never localhost/my-container-image:latest)
+        buildah mount --storage-driver=$(params.STORAGE_DRIVER) --root files/buildah-containers $container | tee /workspace/container_path
+        echo $container > /workspace/container_name
+      securityContext:
+        capabilities:
+          add:
+            - SETFCAP
+      resources:
+        limits:
+          memory: 4Gi
+          cpu: '2'
+        requests:
+          memory: 512Mi
+          cpu: 250m
+
+    # - name: sbom-syft-generate
+    #   image: quay.io/redhat-appstudio/syft:v0.94.0
+    #   script: |
+
+    #     syft dir:$(workspaces.resources.path)/$(params.app-dir) --output cyclonedx-json=$(workspaces.resources.path)/sbom-source.json
+    #     find $(cat /workspace/container_path) -xtype l -delete
+    #     syft dir:$(cat /workspace/container_path) --output cyclonedx-json=$(workspaces.resources.path)/sbom-image.json
+
+    #     cat $(workspaces.resources.path)/sbom-image.json
+
+  volumes:
+    - emptyDir: {}
+      name: envparams
+  workspaces:
+    - mountPath: /files
+      name: files
+    - mountPath: /resources
+      name: resources

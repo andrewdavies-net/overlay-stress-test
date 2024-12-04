@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: build-and-deploy-varlibworkspace-1
+spec:
+  pipelineRef:
+    name: build-and-deploy-varlibworkspace
+  workspaces:
+  - name: resources
+    volumeClaimTemplate:
+      metadata:
+        creationTimestamp: null
+        labels:
+          tekton.dev/pipeline: build-and-deploy-varlibworkspace
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+  - name: files
+    volumeClaimTemplate:
+      metadata:
+        creationTimestamp: null
+        labels:
+          tekton.dev/pipeline: build-and-deploy-varlibworkspace
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 75Gi
+        storageClassName: ocs-storagecluster-ceph-rbd
