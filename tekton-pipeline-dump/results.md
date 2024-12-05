@@ -10,7 +10,7 @@ using --layers to cache the build images to local & remote repository, emptydir 
 
 ### build-and-deploy-standard-build-twice-block-rwo
 
-Using cephblockfs behind /var/lib/containers, build didnt appear to pickup cache or previous layers 
+Using cephblockfs behind /var/lib/containers, build didnt appear to pickup cache or previous layers, did encounter signficant issues with spining up pods as mounting/unmounting 
 > Around 17 mins 
 
 ### build-and-deploy-standard-build-twice-file-rwx
