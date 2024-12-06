@@ -1,0 +1,80 @@
+apiVersion: tekton.dev/v1
+kind: Pipeline
+metadata:
+  name: build-and-deploy-varlibworkspace
+  namespace: tekton-overlay-test
+spec:
+  tasks:
+    - name: git-clone
+      params:
+        - name: url
+          value: 'https://github.com/andrewdavies-net/overlay-stress-test'
+        - name: revision
+          value: main
+        - name: submodules
+          value: 'true'
+        - name: depth
+          value: '1'
+        - name: sslVerify
+          value: 'true'
+        - name: deleteExisting
+          value: 'true'
+        - name: verbose
+          value: 'true'
+        # - name: gitInitImage
+        #   value: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.40.2
+        # - name: userHome
+        #   value: /home/git
+      taskRef:
+        kind: Task
+        name: git-clone
+      workspaces:
+        - name: output
+          workspace: resources
+    - name: build-varlib-workspace
+      params:
+        - name: TLSVERIFY
+          value: 'false'
+        - name: STORAGE_DRIVER
+          value: vfs
+        - name: app-dir
+          value: /build-container/build/
+        - name: containerfile-dir
+          value: ./Containerfile
+      runAfter:
+        - git-clone
+      taskRef:
+        kind: Task
+        name: build-varlib-workspace
+      workspaces:
+        - name: files
+          workspace: files
+        - name: resources
+          workspace: resources
+    - name: build-varlib-workspace-validate
+      params:
+        - name: TLSVERIFY
+          value: 'false'
+        - name: STORAGE_DRIVER
+          value: vfs
+        - name: app-dir
+          value: /build-container/build/
+        - name: containerfile-dir
+          value: ./Containerfile
+      runAfter:
+        - build-varlib-workspace
+      taskRef:
+        kind: Task
+        name: build-varlib-workspace-validate
+      workspaces:
+        - name: files
+          workspace: files
+        - name: resources
+          workspace: resources
+  workspaces:
+    - name: files
+      optional: false
+    - name: resources
+      optional: false
+  params: []
+  finally: []

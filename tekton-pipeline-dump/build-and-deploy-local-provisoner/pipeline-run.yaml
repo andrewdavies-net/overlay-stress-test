@@ -1,0 +1,34 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: build-and-deploy-demo-10
+spec:
+  pipelineRef:
+    name: build-and-deploy-varlibworkspace
+  workspaces:
+  - name: resources
+    volumeClaimTemplate:
+      metadata:
+        creationTimestamp: null
+        labels:
+          tekton.dev/pipeline: build-and-deploy-varlibworkspace
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 1Gi
+        storageClassName: openebs-hostpath
+  - name: files
+    volumeClaimTemplate:
+      metadata:
+        creationTimestamp: null
+        labels:
+          tekton.dev/pipeline: build-and-deploy-varlibworkspace
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 20Gi
+        storageClassName: openebs-hostpath
